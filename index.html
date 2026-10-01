@@ -63,8 +63,20 @@ fieldset.it legend{font-weight:700;padding:0 6px;margin-left:-6px}
 @media(max-width:520px){.rk{grid-template-columns:1fr 60px}.rk span:last-child{grid-column:1/-1}}
 @page{size:A4;margin:15mm}
 @media print{*{-webkit-print-color-adjust:exact;print-color-adjust:exact}body.rp header,body.rp .id,body.rp .panel:not(#pR){display:none!important}body.pi header,body.pi .id,body.pi .panel:not(.on){display:none!important}body.pi .pid{display:block;margin-bottom:6px}.rpt{--card:#fff;--ink:#000;--mut:#444;--line:#999;--sel:#e8f3ef;background:#fff;color:#000;border:none;padding:0}.rsec{break-after:avoid}.sg{break-inside:avoid}:root{padding:0}body{background:#fff;color:#000;font-size:12px}header{background:#fff;color:#000;border-bottom:2px solid #000;padding:0 0 8px}.bar,.ch,.btn,.no{display:none!important}.panel{display:block!important;padding:0;break-before:page}#pR{break-before:auto}.it{break-inside:avoid;border-color:#999}.op label:not(:has(input:checked)){display:none}.op{display:block}input,textarea{border:none;padding:0;resize:none}}
-</style></head><body>
-<header><div class="w"><h1>Instrumen Supervisi Akademik</h1><p>MTsN 3 Subang, Tahun Pelajaran 2026/2027</p></div></header>
+#lg{position:fixed;inset:0;z-index:99;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:16px}
+#lgf{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:24px;width:100%;max-width:360px;display:flex;flex-direction:column;gap:12px}
+#lgl{height:100px;width:auto;align-self:center}#lgf h1{margin:0;font-size:20px;color:var(--pine);text-align:center}#lgf p{margin:0;font-size:13px;color:var(--mut);text-align:center}
+#lgf input{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:9px 10px;width:100%}
+#lge{color:#c0392b;font-size:13px;min-height:18px}body.lk>header,body.lk>main{display:none}
+.lo{float:right;margin:-34px 0 0;font:inherit;font-size:13px;padding:5px 12px;border-radius:16px;border:1px solid var(--on);background:transparent;color:var(--on);cursor:pointer}
+@media print{#lg,.lo{display:none!important}}
+</style></head><body class="lk">
+<div id="lg"><form id="lgf" autocomplete="on"><img id="lgl" alt="Logo MTsN 3 Subang"><h1>Masuk</h1><p>Instrumen Supervisi Akademik MTsN 3 Subang</p>
+<label class="f">Username<input id="lgu" type="text" autocomplete="username" autocapitalize="none" required></label>
+<label class="f">Password<input id="lgp" type="password" autocomplete="current-password" required></label>
+<div id="lge" role="alert"></div><button class="btn" type="submit" style="margin:0">Masuk</button></form></div>
+
+<header><div class="w"><h1>Instrumen Supervisi Akademik</h1><p>MTsN 3 Subang, Tahun Pelajaran 2026/2027</p><button type="button" id="lo" class="lo no">Keluar</button></div></header>
 <main class="w">
 <div class="id" id="idf"></div>
 <div class="bar no"><div class="tabs" id="tabs"></div><div id="sb"></div></div>
@@ -157,7 +169,7 @@ const h=`<div class="rpt"><div class="lh"><img src="${LG1}" alt="Kemenag"><div c
 <div class="rsec">I. RINGKASAN CAPAIAN SUPERVISI</div><div class="cards">${R.map(card).join('')}<div class="cd"><small>NILAI RATA-RATA</small><div class="v" style="color:${D.length?col(a):'inherit'}">${D.length?a+'%':'-'}</div><span class="pl">KATEGORI: ${D.length?pred(a).toUpperCase():'-'}</span></div></div>${fx}
 ${R.map(sect).join('')}
 <div class="rsec">V. ANALISIS UMPAN BALIK DAN RENCANA TINDAK LANJUT</div><div class="fb"><div><h4>✔ Kekuatan Utama Yang Teramati</h4>${ul(lines(S.n['04s0']),'Belum diisi')}</div><div><h4>⚠ Aspek Yang Perlu Diperbaiki</h4>${ul(lines(S.n['04s1']),'Belum diisi')}</div><div><h4>📌 Rencana Action Plan (Tindak Lanjut)</h4>${ul(lines(S.n['04s2']),'Belum diisi')}</div><div><h4>💬 Tanggapan Guru Terperiksa</h4>${lines(S.n['04s3']).length?'<p><i>"'+lines(S.n['04s3']).map(esc).join('; ')+'"</i></p>':'<p class="m">Belum diisi</p>'}</div></div>
-<div class="rsec">VI. REKOMENDASI SUPERVISOR &amp; KESIMPULAN</div><p style="margin:0">${kes}</p>${sig()}</div><button class="btn no" onclick="print()">Cetak atau simpan PDF</button><button class="btn o no" id="rst">Hapus semua data</button>`;
+<div class="rsec">VI. REKOMENDASI SUPERVISOR &amp; KESIMPULAN</div><p style="margin:0">${kes}</p>${sig()}</div><button class="btn no" onclick="print()">Cetak atau simpan PDF</button><button class="btn no" id="snd">Kirim ke Google Sheets</button><button class="btn o no" id="snu">Atur URL Sheet</button><p class="m no" id="snm" role="status"></p><button class="btn o no" id="rst">Hapus semua data</button>`;
 document.getElementById('pR').innerHTML=h;pads()}
 function upd(){const e=document.getElementById('sb');if(cur=='R'||cur=='04'){e.innerHTML=cur=='R'?'Ringkasan seluruh instrumen':'Lembar umpan balik, disimpan otomatis';return}
 const r=sc(cur);e.innerHTML=r.c==r.n?`Skor <b>${r.s}/${4*r.n}</b>, rumus: (${r.s} ÷ ${4*r.n}) × 100% = ${r.p}%, predikat <b>${pred(r.p)}</b>`:`Terisi <b>${r.c}/${r.n}</b> butir, skor sementara ${r.s}/${4*r.n}`}
@@ -173,4 +185,35 @@ if(t.id=='rst'){if(t.dataset.s){S={id:{},a:{},n:{}};save();location.reload()}els
 document.addEventListener('change',e=>{const t=e.target;if(t.dataset.mp){S.id.m=t.value;save()}if(t.dataset.kl){S.id.kl=t.value;save()}if(t.dataset.sel){const k=t.dataset.sel,n=k=='g'?'ng':'ns',x=(k=='g'?GURU:SUP)[t.value];S.id[k]=x?x[0]:'';S.id[n]=x?x[1]:'';document.querySelector('[data-id="'+n+'"]').value=S.id[n];save()}if(t.type=='radio'){(S.a[t.dataset.k]=S.a[t.dataset.k]||[])[t.dataset.i]=+t.value;save();upd()}});
 document.addEventListener('input',e=>{const t=e.target;if(t.dataset.id){S.id[t.dataset.id]=t.value;save()}if(t.dataset.n&&t.tagName=='TEXTAREA'){S.n[t.dataset.n]=t.value;save()}});
 rek();show('01');
+</script><script>
+const AK=[["rosih", "8ce8f6975fc5684740d362aa076fa3c49ed419c88f26b95640557972bcce9cfa", 0], ["acu", "cbdefe97883a73c8a6eb267c11d531a4fa79cc824aef5e97400219c76ca8ccee", 1], ["rika", "e44f6bb1190fac1c6e3ed58332a121530124fc388926c3fad3507ad8fdfc4b08", 2], ["firdaus", "ca5c727c64117eea0f80d02c0d373963ea0ed8a2798c202100fce845fbd18c5b", 3], ["hoerudin", "9574f6d89c8da01b1a74fa3bf5203c4c91d46933941225332062e0a36a76dc83", 4]];
+document.getElementById('lgl').src=LG2;
+const lgh=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(x=>x.toString(16).padStart(2,'0')).join('');
+function unlock(u,fresh){document.body.classList.remove('lk');document.getElementById('lg').style.display='none';
+if(fresh){const a=AK.find(x=>x[0]==u),sel=document.querySelector('[data-sel="sp"]');if(a&&sel){sel.value=a[2];sel.dispatchEvent(new Event('change',{bubbles:true}))}}}
+let ss=null;try{ss=sessionStorage.getItem('sv26auth')}catch(e){}
+if(ss&&AK.some(x=>x[0]==ss))unlock(ss,false);
+document.getElementById('lgf').addEventListener('submit',async e=>{e.preventDefault();const u=document.getElementById('lgu').value.trim().toLowerCase(),p=document.getElementById('lgp').value,er=document.getElementById('lge');
+try{const h=await lgh('sv26|'+u+'|'+p);if(AK.some(x=>x[0]==u&&x[1]==h)){try{sessionStorage.setItem('sv26auth',u)}catch(_){}document.getElementById('lgp').value='';unlock(u,true)}else er.textContent='Username atau password salah.'}
+catch(_){er.textContent='Browser tidak mendukung login. Buka lewat https atau browser terbaru.'}});
+document.getElementById('lo').onclick=()=>{try{sessionStorage.removeItem('sv26auth')}catch(e){}location.reload()};
+</script><script>
+const SH_TOKEN='80dbb392f396b138',SH_URL='';
+const shUrl=()=>{try{return localStorage.getItem('sv26url')||SH_URL}catch(e){return SH_URL}};
+const shTxt=k=>(S.n[k]||'').trim();
+document.addEventListener('click',async e=>{const t=e.target,m=document.getElementById('snm'),say=x=>{if(m)m.textContent=x};
+if(t.id=='snu'){const u=prompt('Tempel URL Web App Google Apps Script (berakhiran /exec):',shUrl());if(u!==null){try{localStorage.setItem('sv26url',u.trim())}catch(_){}say(u.trim()?'URL Sheet disimpan.':'URL Sheet dihapus.')}return}
+if(t.id!='snd')return;
+const i=S.id;if(!i.g||!i.tg){say('Pilih nama guru dan isi tanggal supervisi dulu di bagian atas halaman.');return}
+const ar=k=>{const a=S.a[k]||[],n=INS.find(x=>x.k==k).it.length;return Array.from({length:n},(_,j)=>a[j]||'')};
+if(![...ar('01'),...ar('02'),...ar('03')].some(Boolean)){say('Belum ada skor yang diisi.');return}
+let url=shUrl();if(!url){url=prompt('Tempel URL Web App Google Apps Script (berakhiran /exec):')||'';url=url.trim();if(!url){say('URL Sheet belum diatur.');return}try{localStorage.setItem('sv26url',url)}catch(_){}}
+let hs=5381;for(const c of (i.g+'|'+(i.kl||'')+'|'+(i.m||'')))hs=((hs<<5)+hs+c.charCodeAt(0))>>>0;
+const id='SV'+i.tg.replace(/-/g,'')+'-'+hs.toString(36).slice(0,4).toUpperCase();
+const body={token:SH_TOKEN,id,tanggal:i.tg,guru:i.g,mapel:i.m||'',kelas:i.kl||'',supervisor:i.sp||'',s01:ar('01'),s02:ar('02'),s03:ar('03'),c01:shTxt('01n'),c02:shTxt('02n'),c03:shTxt('03n'),kekuatan:shTxt('04s0'),perbaikan:shTxt('04s1'),rtl:shTxt('04s2'),tanggapan:shTxt('04s3')};
+t.disabled=true;say('Mengirim...');
+try{const r=await fetch(url,{method:'POST',body:JSON.stringify(body)}),j=await r.json();
+say(j.ok?`Berhasil: data ${j.mode} di baris ${j.row} sheet Supervisi (ID ${id}).`:'Gagal: '+(j.error||'respon tidak dikenal'))}
+catch(err){say('Tidak bisa terhubung ke Google Sheets. Periksa koneksi dan URL, lalu cek sheet untuk memastikan data masuk.')}
+t.disabled=false});
 </script></body></html>
