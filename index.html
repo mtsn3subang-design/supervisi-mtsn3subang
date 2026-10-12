@@ -226,7 +226,7 @@ document.addEventListener('change',e=>{const t=e.target;if(t.dataset.mp){S.id.m=
 document.addEventListener('input',e=>{const t=e.target;if(t.dataset.id){S.id[t.dataset.id]=t.value;save()}if(t.dataset.n&&t.tagName=='TEXTAREA'){S.n[t.dataset.n]=t.value;save()}});
 document.addEventListener('change',()=>{if(cur=='R2')rek2()});document.addEventListener('input',()=>{if(cur=='R2')rek2()});rek();show('01');
 </script><script>
-const AK=[["rosih", "8ce8f6975fc5684740d362aa076fa3c49ed419c88f26b95640557972bcce9cfa", 0], ["acu", "cbdefe97883a73c8a6eb267c11d531a4fa79cc824aef5e97400219c76ca8ccee", 1], ["rika", "e44f6bb1190fac1c6e3ed58332a121530124fc388926c3fad3507ad8fdfc4b08", 2], ["firdaus", "ca5c727c64117eea0f80d02c0d373963ea0ed8a2798c202100fce845fbd18c5b", 3], ["hoerudin", "9574f6d89c8da01b1a74fa3bf5203c4c91d46933941225332062e0a36a76dc83", 4]];
+const AK=[["rosih", "84f123e4304dbaba88f1f745775ae6aa10b8eaf859ef41b528a665ead57f50b6", 0], ["acu", "66ee54c3ce6ea6614e32b5b84a09722651493635522d5f649824d37ef4a4a7ae", 1], ["rika", "13e3f53f04191ec9769a7dae73b4208bab10fe0d8e048bb4178c03dbe9dcf552", 2], ["firdaus", "e37affb79daa6fb48603785c98ec71a2f854ad36715c03ffb4a5a0ecf49093f5", 3], ["hoerudin", "436c876e7387ae2089f021ccb48bdbdfcf63f41a0eb96421966cdf8e093f3bec", 4]];
 document.getElementById('lgl').src=LG2;
 const lgh=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(x=>x.toString(16).padStart(2,'0')).join('');
 function unlock(u,fresh){document.body.classList.remove('lk');document.getElementById('lg').style.display='none';
